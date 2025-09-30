@@ -4,6 +4,13 @@ $pdo = getConnection();
 
 $roles = $pdo->query("SELECT id_rol, nombre FROM rol")->fetchAll(PDO::FETCH_ASSOC);
 
+// Si se solicita formato JSON para roles
+if (isset($_GET['format']) && $_GET['format'] === 'json') {
+    header('Content-Type: application/json');
+    echo json_encode($roles);
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nombre = trim($_POST["nombre"]);
     $apellido = trim($_POST["apellido"]);
